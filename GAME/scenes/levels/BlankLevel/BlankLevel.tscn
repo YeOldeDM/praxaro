@@ -43,4 +43,6 @@ tile_data = IntArray(  )
 
 [node name="START" type="Position2D" parent="."]
 
+transform/pos = Vector2( 240.693, 101.786 )
+
 
