@@ -4,7 +4,7 @@ extends Control
 
 
 func _ready():
-	get_node("Env").fade_in()
+	get_node("Fader").fade_in()
 	get_node("Actions/START").grab_focus()
 	
 	# Show version number
@@ -14,8 +14,8 @@ func _ready():
 
 
 func _on_START_pressed():
-#	get_node("Env").fade_out()
-#	yield( get_node("Env"), "fade_finished" )
+#	get_node("Fader").fade_out()
+#	yield( get_node("Fader"), "fade_finished" )
 #	get_tree().change_scene( GAME.GAME_SCENE )
 	pass
 
@@ -29,6 +29,6 @@ func _on_OPTIONS_pressed():
 
 
 func _on_QUIT_pressed():
-	get_node("Env").fade_out()
-	yield( get_node("Env"), "fade_finished" )
+	get_node("Fader").fade_out()
+	yield( get_node("Fader"), "fade_finished" )
 	get_tree().quit()
