@@ -1,42 +1,9 @@
-[gd_scene load_steps=12 format=1]
+[gd_scene load_steps=5 format=1]
 
-[ext_resource path="res://res/styles/border_red.tres" type="StyleBox" id=1]
-[ext_resource path="res://res/styles/border_green.tres" type="StyleBox" id=2]
-[ext_resource path="res://res/styles/border_blue.tres" type="StyleBox" id=3]
-[ext_resource path="res://assets/fonts/Pixelig Cursief.ttf" type="DynamicFontData" id=4]
-[ext_resource path="res://scenes/Title/Title.gd" type="Script" id=5]
-[ext_resource path="res://assets/graphics/Title/title_splash.png" type="Texture" id=6]
-[ext_resource path="res://scenes/shared/Fader/Fader.tscn" type="PackedScene" id=7]
-
-[sub_resource type="StyleBoxEmpty" id=1]
-
-content_margin/left = -1.0
-content_margin/right = -1.0
-content_margin/top = -1.0
-content_margin/bottom = -1.0
-
-[sub_resource type="StyleBoxEmpty" id=2]
-
-content_margin/left = -1.0
-content_margin/right = -1.0
-content_margin/top = -1.0
-content_margin/bottom = -1.0
-
-[sub_resource type="DynamicFont" id=3]
-
-font/size = 10
-font/use_mipmaps = false
-font/use_filter = false
-font/font = ExtResource( 4 )
-
-[sub_resource type="Theme" id=4]
-
-default_font = SubResource( 3 )
-Button/styles/disabled = SubResource( 1 )
-Button/styles/focus = SubResource( 2 )
-Button/styles/hover = ExtResource( 1 )
-Button/styles/normal = ExtResource( 2 )
-Button/styles/pressed = ExtResource( 3 )
+[ext_resource path="res://res/themes/default_theme.tres" type="Theme" id=1]
+[ext_resource path="res://scenes/Title/Title.gd" type="Script" id=2]
+[ext_resource path="res://assets/graphics/Title/title_splash.png" type="Texture" id=3]
+[ext_resource path="res://scenes/shared/Fader/Fader.tscn" type="PackedScene" id=4]
 
 [node name="Title" type="Control"]
 
@@ -46,12 +13,12 @@ focus/ignore_mouse = false
 focus/stop_mouse = true
 size_flags/horizontal = 2
 size_flags/vertical = 2
-theme/theme = SubResource( 4 )
+theme/theme = ExtResource( 1 )
 margin/left = 0.0
 margin/top = 0.0
 margin/right = 0.0
 margin/bottom = 0.0
-script/script = ExtResource( 5 )
+script/script = ExtResource( 2 )
 
 [node name="Graphic" type="TextureFrame" parent="."]
 
@@ -63,7 +30,7 @@ margin/left = 64.0
 margin/top = 16.0
 margin/right = 416.0
 margin/bottom = 160.0
-texture = ExtResource( 6 )
+texture = ExtResource( 3 )
 expand = true
 stretch_mode = 0
 
@@ -195,7 +162,7 @@ shortcut = null
 text = "QUIT"
 flat = true
 
-[node name="Fader" parent="." instance=ExtResource( 7 )]
+[node name="Fader" parent="." instance=ExtResource( 4 )]
 
 [connection signal="pressed" from="Actions/START" to="." method="_on_START_pressed" flags=6]
 

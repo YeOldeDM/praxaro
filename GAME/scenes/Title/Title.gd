@@ -3,6 +3,27 @@ extends Control
 
 
 
+
+func StartGame():
+	pass
+
+func LoadGame():
+	pass
+
+func QuitGame():
+	get_node("Fader").fade_out()
+	yield( get_node("Fader"), "fade_finished" )
+	get_tree().quit()
+
+
+
+
+
+
+
+
+
+
 func _ready():
 	get_node("Fader").fade_in()
 	get_node("Actions/START").grab_focus()
@@ -13,15 +34,18 @@ func _ready():
 
 
 
+
+
+
+
+
+
 func _on_START_pressed():
-#	get_node("Fader").fade_out()
-#	yield( get_node("Fader"), "fade_finished" )
-#	get_tree().change_scene( GAME.GAME_SCENE )
-	pass
+	StartGame()
 
 
 func _on_CONTINUE_pressed():
-	pass # replace with function body
+	LoadGame()
 
 
 func _on_OPTIONS_pressed():
@@ -29,6 +53,5 @@ func _on_OPTIONS_pressed():
 
 
 func _on_QUIT_pressed():
-	get_node("Fader").fade_out()
-	yield( get_node("Fader"), "fade_finished" )
-	get_tree().quit()
+	QuitGame()
+

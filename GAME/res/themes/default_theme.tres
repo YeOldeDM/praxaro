@@ -1,0 +1,37 @@
+[gd_resource type="Theme" load_steps=8 format=1]
+
+[ext_resource path="res://res/styles/border_red.tres" type="StyleBox" id=1]
+[ext_resource path="res://res/styles/border_green.tres" type="StyleBox" id=2]
+[ext_resource path="res://res/styles/border_blue.tres" type="StyleBox" id=3]
+[ext_resource path="res://assets/fonts/Pixelig Cursief.ttf" type="DynamicFontData" id=4]
+
+[sub_resource type="StyleBoxEmpty" id=1]
+
+content_margin/left = -1.0
+content_margin/right = -1.0
+content_margin/top = -1.0
+content_margin/bottom = -1.0
+
+[sub_resource type="StyleBoxEmpty" id=2]
+
+content_margin/left = -1.0
+content_margin/right = -1.0
+content_margin/top = -1.0
+content_margin/bottom = -1.0
+
+[sub_resource type="DynamicFont" id=3]
+
+font/size = 10
+font/use_mipmaps = false
+font/use_filter = false
+font/font = ExtResource( 4 )
+
+[resource]
+
+default_font = SubResource( 3 )
+Button/styles/disabled = SubResource( 1 )
+Button/styles/focus = SubResource( 2 )
+Button/styles/hover = ExtResource( 1 )
+Button/styles/normal = ExtResource( 2 )
+Button/styles/pressed = ExtResource( 3 )
+

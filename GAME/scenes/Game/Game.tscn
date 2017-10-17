@@ -1,0 +1,33 @@
+[gd_scene load_steps=3 format=1]
+
+[ext_resource path="res://scenes/Game/Game.gd" type="Script" id=1]
+[ext_resource path="res://scenes/shared/Fader/Fader.tscn" type="PackedScene" id=2]
+
+[node name="Game" type="Node2D"]
+
+script/script = ExtResource( 1 )
+player_scene_path = null
+
+[node name="Fader" parent="." instance=ExtResource( 2 )]
+
+[node name="HUD" type="CanvasLayer" parent="."]
+
+layer = 1
+offset = Vector2( 0, 0 )
+rotation = 0.0
+scale = Vector2( 1, 1 )
+
+[node name="Frame" type="Control" parent="HUD"]
+
+anchor/right = 1
+anchor/bottom = 1
+focus/ignore_mouse = false
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 2
+margin/left = 0.0
+margin/top = 0.0
+margin/right = 0.0
+margin/bottom = 0.0
+
+
