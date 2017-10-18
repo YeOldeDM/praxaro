@@ -1,5 +1,22 @@
 extends KinematicBody2D
 
+var RISING_GRAVITY = 350
+var FALLING_GRAVITY = 800
+
+
+var AIR_MIN_TIME = 0.2	# The min amount of sec you must be airborne to be considered "in the air"
+
+# horizontal Acceleration forces
+var FLOOR_MOVE_FORCE = 800
+var AIR_MOVE_FORCE = 700
+# horizontal Deceleration forces
+var FLOOR_STOP_FORCE = 600
+var AIR_STOP_FORCE = 250
+# Max speeds
+var MAX_SPEED = Vector2(200, 600)
+
+var JUMP_FORCE = 300
+var JUMP_STOP_FORCE = 750
 
 
 var facing = 1 setget _set_facing
@@ -7,14 +24,38 @@ var facing = 1 setget _set_facing
 
 var velocity = Vector2()
 
+var pressed = {
+	"JUMP":	false,
+	"STRIKE":	false,
+	}
+
+var airtime = 0
+
+
+
+
+
+func is_in_air():
+	return self.airtime >= AIR_MIN_TIME
+
+func is_on_ground():
+	return self.airtime <= 0.0
+
+
+
+
+
+
 func _ready():
 	set_fixed_process(true)
 
 func _fixed_process(delta):
 	### SETUP ###
+	var hit_ground = false
 	var new_facing = self.facing
 	# Create force
-	var force = Vector2()
+	var G = FALLING_GRAVITY if velocity.y > 0 else RISING_GRAVITY
+	var force = Vector2(0,G * int( is_in_air() ) )
 	
 	
 	
@@ -54,11 +95,18 @@ func _fixed_process(delta):
 	
 	
 	### COLLISION HANDLING ###
-	
+	if is_colliding():
+		var N = get_collision_normal()
+		var A = rad2deg(acos(N.dot(Vector2(0, -1))))
+		if A <= 20:
+			self.airtime = 0
 	
 	
 	### PREP NEXT FRAME ###
-	
+	pressed.JUMP = JUMP
+	pressed.STRIKE = STRIKE
+	if !hit_ground:
+		self.airtime += delta
 	
 	
 	
