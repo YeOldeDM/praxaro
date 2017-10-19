@@ -7,9 +7,11 @@
 
 script/script = ExtResource( 1 )
 player_scene_path = "res://scenes/Hero/Hero.tscn"
-DEFAULT_STARTING_LEVEL = "res://scenes/levels/Test/TestLevel1.tscn"
+DEFAULT_STARTING_LEVEL = "res://scenes/levels/Test/TestLevel2.tscn"
 
 [node name="Fader" parent="." instance=ExtResource( 2 )]
+
+visibility/visible = false
 
 [node name="HUD" type="CanvasLayer" parent="."]
 

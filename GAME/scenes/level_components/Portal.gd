@@ -4,10 +4,9 @@ export(String, FILE, "*.tscn") var target_level
 export(String) var target_point
 
 func Use():
+#	print("OOH A DOOR!")
 	get_owner().game.set_level( self.target_level, self.target_point )
 
-func _ready():
-	pass
 
 
 func _on_Portal_body_enter( body ):

@@ -27,6 +27,7 @@ var velocity = Vector2()
 var pressed = {
 	"JUMP":	false,
 	"STRIKE":	false,
+	"UP":	false,
 	}
 
 var can_move = false
@@ -126,9 +127,16 @@ func _fixed_process(delta):
 	if !JUMP and is_in_air() and velocity.y < 0:
 		velocity.y += JUMP_STOP_FORCE * delta
 	
+	# Use w/ UP
+	if !pressed.UP and INPUT == Vector2(0,-1):
+		if self.portal and is_on_ground():
+			self.portal.Use()
+	
 	### PREP NEXT FRAME ###
 	pressed.JUMP = JUMP
 	pressed.STRIKE = STRIKE
+	pressed.UP = UP
+	
 	if !hit_ground:
 		self.airtime += delta
 	
