@@ -15,25 +15,24 @@ var level
 
 func set_level( level_scene, spawn_point ):
 	var lvl = load(level_scene)
-	if lvl != OK:
-		return
-	
+
 	if self.level:
 		self.level.queue_free()
 	lvl = lvl.instance()
 	add_child(lvl)
 	self.level = lvl
+	spawn_player()
+	self.level.add_child( self.player )
+	self.player.set_pos( self.level.get_node( spawn_point ).get_pos() )
 	
 
 func spawn_player():
 	var p = load( player_scene_path )
-	if p != OK:
-		return
+
 	p = p.instance()
 	self.player = p
-	return p
+
 
 func _ready():
-	# Called every time the node is added to the scene.
-	# Initialization here
-	pass
+	set_level( "res://scenes/levels/Test/TestLevel1.tscn", "START" )
+	get_node("Fader").fade_in()
