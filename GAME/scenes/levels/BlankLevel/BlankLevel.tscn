@@ -25,6 +25,9 @@ draw_center = true
 [node name="BlankLevel" type="Node2D"]
 
 script/script = ExtResource( 1 )
+hide_colmap = true
+hide_boundry = true
+DEFAULT_WARP_POINT = NodePath("START")
 
 [node name="VISMAP" type="TileMap" parent="."]
 

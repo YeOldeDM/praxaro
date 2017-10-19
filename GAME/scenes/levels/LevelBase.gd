@@ -1,7 +1,9 @@
 extends Node2D
 
-var hide_colmap = true setget _set_hide_colmap
-var hide_boundry = true setget _set_hide_boundry
+export(bool) var hide_colmap = true setget _set_hide_colmap
+export(bool) var hide_boundry = true setget _set_hide_boundry
+
+export(NodePath) var DEFAULT_WARP_POINT
 
 func get_boundry_rect():
 	return get_node("BOUNDRY").get_rect()

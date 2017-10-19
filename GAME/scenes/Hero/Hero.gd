@@ -29,12 +29,15 @@ var pressed = {
 	"STRIKE":	false,
 	}
 
+var can_move = false
+
 var airtime = 0
 
 
 
 func init( to_level ):
 	get_node("Camera").set_limits( to_level.get_boundry_rect() )
+	self.can_move = true
 
 func is_in_air():
 	return self.airtime >= AIR_MIN_TIME
@@ -72,7 +75,7 @@ func _fixed_process(delta):
 	
 	
 	# Covert directional input into a Vector
-	var INPUT = Vector2( RIGHT - LEFT, DOWN - UP )
+	var INPUT = Vector2( RIGHT - LEFT, DOWN - UP ) * int(self.can_move) 
 	var vsign = sign(velocity.x)
 	var vlen = abs(velocity.x)
 	
@@ -118,7 +121,7 @@ func _fixed_process(delta):
 	
 	# Jump
 	if JUMP and !pressed.JUMP and is_on_ground():
-		velocity.y = -JUMP_FORCE
+		velocity.y = -JUMP_FORCE * int( self.can_move )
 	# Kill upward vertical movement if JUMP control is let go
 	if !JUMP and is_in_air() and velocity.y < 0:
 		velocity.y += JUMP_STOP_FORCE * delta
