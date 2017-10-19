@@ -21,6 +21,7 @@ func set_level( level_scene=DEFAULT_STARTING_LEVEL, spawn_point=null ):
 	lvl = lvl.instance()
 	add_child(lvl)
 	self.level = lvl
+	lvl.game = self
 	spawn_player()
 	self.level.add_child( self.player )
 	if !spawn_point:
@@ -33,6 +34,7 @@ func spawn_player():
 
 	p = p.instance()
 	self.player = p
+
 
 
 func _ready():

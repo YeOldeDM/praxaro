@@ -33,7 +33,7 @@ var can_move = false
 
 var airtime = 0
 
-
+var portal	# reference to a portal we're standing in front of
 
 func init( to_level ):
 	get_node("Camera").set_limits( to_level.get_boundry_rect() )
