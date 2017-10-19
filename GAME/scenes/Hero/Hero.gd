@@ -1,10 +1,10 @@
 extends KinematicBody2D
 
-var RISING_GRAVITY = 350
+var RISING_GRAVITY = 480
 var FALLING_GRAVITY = 800
 var MIN_FALLING_VELOCITY = 8
 
-var AIR_MIN_TIME = 0.2	# The min amount of sec you must be airborne to be considered "in the air"
+var AIR_MIN_TIME = 0.16	# The min amount of sec you must be airborne to be considered "in the air"
 
 # horizontal Acceleration forces
 var FLOOR_MOVE_FORCE = 800
@@ -15,7 +15,7 @@ var AIR_STOP_FORCE = 250
 # Max speeds
 var MAX_SPEED = Vector2(60, 600)
 
-var JUMP_FORCE = 216
+var JUMP_FORCE = 190
 var JUMP_STOP_FORCE = 750
 
 
@@ -33,7 +33,8 @@ var airtime = 0
 
 
 
-
+func init( to_level ):
+	get_node("Camera").set_limits( to_level.get_boundry_rect() )
 
 func is_in_air():
 	return self.airtime >= AIR_MIN_TIME
@@ -86,6 +87,8 @@ func _fixed_process(delta):
 		# Acelerate up to max speed or change direction
 		if vlen < MAX_SPEED.x or vsign != INPUT.x:
 			force.x += INPUT.x * A
+		# update new facing
+		new_facing = INPUT.x
 	# otherwise decelerate toward zero speed
 	else:
 		vlen = max( 0, vlen - ( D * delta ) )
@@ -115,7 +118,7 @@ func _fixed_process(delta):
 	
 	# Jump
 	if JUMP and !pressed.JUMP and is_on_ground():
-		velocity.y -= JUMP_FORCE
+		velocity.y = -JUMP_FORCE
 	# Kill upward vertical movement if JUMP control is let go
 	if !JUMP and is_in_air() and velocity.y < 0:
 		velocity.y += JUMP_STOP_FORCE * delta
@@ -126,6 +129,8 @@ func _fixed_process(delta):
 	if !hit_ground:
 		self.airtime += delta
 	
+	if new_facing != self.facing:
+		self.facing = new_facing
 	
 	
 	

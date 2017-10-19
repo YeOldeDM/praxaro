@@ -24,7 +24,7 @@ func set_level( level_scene, spawn_point ):
 	spawn_player()
 	self.level.add_child( self.player )
 	self.player.set_pos( self.level.get_node( spawn_point ).get_pos() )
-	
+	self.player.init( self.level )
 
 func spawn_player():
 	var p = load( player_scene_path )
