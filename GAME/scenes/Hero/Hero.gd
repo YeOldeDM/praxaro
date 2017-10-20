@@ -4,16 +4,16 @@ var RISING_GRAVITY = 480
 var FALLING_GRAVITY = 800
 var MIN_FALLING_VELOCITY = 0
 
-var AIR_MIN_TIME = 0.2	# The min amount of sec you must be airborne to be considered "in the air"
+var AIR_MIN_TIME = 0.12	# The min amount of sec you must be airborne to be considered "in the air"
 
 # horizontal Acceleration forces
 var FLOOR_MOVE_FORCE = 800
-var AIR_MOVE_FORCE = 700
+var AIR_MOVE_FORCE = 600
 # horizontal Deceleration forces
-var FLOOR_STOP_FORCE = 600
+var FLOOR_STOP_FORCE = 900
 var AIR_STOP_FORCE = 250
 # Max speeds
-var MAX_SPEED = Vector2(60, 600)
+var MAX_SPEED = Vector2(68, 600)
 
 var JUMP_FORCE = 245
 var JUMP_STOP_FORCE = 12
@@ -103,11 +103,10 @@ func _fixed_process(delta):
 	
 	
 	### DIRECT MOTION ###
-	
 	# Integrate force into velocity
 	velocity += force * delta
 	# Turn velocity into motion
-#	velocity.y = min( velocity.y, MAX_SPEED.y )
+	velocity.y = min( velocity.y, MAX_SPEED.y )
 	var motion = move( velocity * delta )
 	
 	
@@ -124,7 +123,9 @@ func _fixed_process(delta):
 		motion = N.slide( motion )
 		move(motion)
 	
-	# Jump
+	
+	
+	### JUMP FORCES ###
 	if JUMP and !pressed.JUMP and not jumping and is_on_ground() and can_move:
 		velocity.y = -JUMP_FORCE
 		self.jumping = true
@@ -137,6 +138,8 @@ func _fixed_process(delta):
 		if self.portal and is_on_ground():
 			self.portal.Use()
 	
+	
+	
 	### PREP NEXT FRAME ###
 	pressed.JUMP = JUMP
 	pressed.STRIKE = STRIKE
@@ -145,9 +148,11 @@ func _fixed_process(delta):
 	if not hit_ground:
 		self.airtime += delta
 	
+	# Set changed properties
 	if new_facing != self.facing:
 		self.facing = new_facing
 	
+	# DEBUG CRAP
 	get_node("Vel").set_text( str( int( velocity.x ) ) +", "+ str( int( velocity.y ) ) )
 	if is_in_air() and velocity.y < 0:
 		print(int(velocity.y))
