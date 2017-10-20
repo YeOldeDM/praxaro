@@ -43,6 +43,7 @@ func _ready():
 
 
 func _on_START_pressed():
+	print("GPO")
 	StartGame()
 
 
