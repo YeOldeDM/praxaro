@@ -3,7 +3,8 @@ extends Node
 const VERSION = {
 		"MAJOR":	0,
 		"MINOR":	0,
-		"BABY":		0
+		"BABY":		1
 		}
 
-const GAME_SCENE = "res://scenes/Game/Game.tscn"	# Doesn't exist yet!
+const TITLE_SCENE = "res://scenes/Title/Title.tscn"
+const GAME_SCENE = "res://scenes/Game/Game.tscn"

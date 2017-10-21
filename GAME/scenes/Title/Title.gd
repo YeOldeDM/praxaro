@@ -7,7 +7,7 @@ extends Control
 func StartGame():
 	get_node("Fader").fade_out()
 	yield( get_node("Fader"), "fade_finished" )
-	get_tree().change_scene_to( preload("res://scenes/Game/Game.tscn") )
+	get_tree().change_scene( GAME.GAME_SCENE )
 
 func LoadGame():
 	pass

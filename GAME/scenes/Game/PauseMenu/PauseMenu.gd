@@ -7,6 +7,10 @@ func toggle_pause():
 	get_tree().set_pause( !get_tree().is_paused() )
 	set_hidden( !get_tree().is_paused() )
 
+
+
+
+
 func _ready():
 	set_process_input(true)
 
@@ -17,13 +21,17 @@ func _input(event):
 		toggle_pause()
 	pause_pressed = PAUSE
 
+
+
+
+
 func _on_RESUME_pressed():
 	toggle_pause()
 
 
 func _on_TOMENU_pressed():
 	get_tree().set_pause(false)
-	get_tree().change_scene_to( preload("res://scenes/Title/Title.tscn") )
+	get_tree().change_scene_to( GAME.TITLE_SCENE )
 
 
 func _on_QUIT_pressed():

@@ -1,10 +1,12 @@
 extends KinematicBody2D
 
+# Personal Gravity forces
 var RISING_GRAVITY = 480
 var FALLING_GRAVITY = 800
 var MIN_FALLING_VELOCITY = 0
 
-var AIR_MIN_TIME = 0.12	# The min amount of sec you must be airborne to be considered "in the air"
+# The min amount of sec you must be airborne to be considered "in the air"
+var AIR_MIN_TIME = 0.12
 
 # horizontal Acceleration forces
 var FLOOR_MOVE_FORCE = 800
@@ -14,13 +16,12 @@ var FLOOR_STOP_FORCE = 900
 var AIR_STOP_FORCE = 250
 # Max speeds
 var MAX_SPEED = Vector2(68, 600)
-
+# Jump forces
 var JUMP_FORCE = 245
 var JUMP_STOP_FORCE = 12
 
 
 var facing = 1 setget _set_facing
-
 
 var velocity = Vector2()
 
@@ -36,6 +37,9 @@ var airtime = 0
 var jumping = false
 
 var portal	# reference to a portal we're standing in front of
+
+
+
 
 func init( to_level ):
 	get_node("Camera").set_limits( to_level.get_boundry_rect() )
@@ -76,14 +80,14 @@ func _fixed_process(delta):
 	var JUMP = Input.is_action_pressed("JUMP")
 	var STRIKE = Input.is_action_pressed("STRIKE")
 	
-	
 	# Covert directional input into a Vector
 	var INPUT = Vector2( RIGHT - LEFT, DOWN - UP ) * int(self.can_move) 
 	var vsign = sign(velocity.x)
 	var vlen = abs(velocity.x)
 	
 	
-	### FORCES ###
+	
+	### ALTER FORCES ###
 	
 	# Define Aceleration/Deceleration to use
 	var A = FLOOR_MOVE_FORCE if is_on_ground() else AIR_MOVE_FORCE
@@ -125,13 +129,20 @@ func _fixed_process(delta):
 	
 	
 	
-	### JUMP FORCES ###
+	### JUMPING ###
 	if JUMP and !pressed.JUMP and not jumping and is_on_ground() and can_move:
 		velocity.y = -JUMP_FORCE
 		self.jumping = true
 	# Kill upward vertical movement if JUMP control is let go
 	if jumping and !JUMP and is_in_air() and velocity.y < -JUMP_STOP_FORCE:
 		velocity.y = JUMP_STOP_FORCE#+= JUMP_STOP_FORCE * delta
+	
+	### STRIKING ###
+	if STRIKE and !pressed.STRIKE:
+		var slash = preload("res://scenes/shared/Hurtboxes/SwordSlash/SwordSlash.tscn").instance()
+		add_child(slash)
+		slash.set_scale( Vector2( self.facing, 1 ) )
+		slash.start( self, randi()%2 )
 	
 	# Use w/ UP
 	if !pressed.UP and INPUT == Vector2(0,-1):
@@ -157,7 +168,11 @@ func _fixed_process(delta):
 	if is_in_air() and velocity.y < 0:
 		print(int(velocity.y))
 	
-	
+
+
+
+
+
 func _set_facing(what):
 	facing = what
 	if has_node("Sprite"):
