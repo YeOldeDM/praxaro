@@ -1,21 +1,10 @@
 extends Control
 
 
+var main
 
 
 
-func StartGame():
-	get_node("Fader").fade_out()
-	yield( get_node("Fader"), "fade_finished" )
-	get_tree().change_scene( GAME.GAME_SCENE )
-
-func LoadGame():
-	pass
-
-func QuitGame():
-	get_node("Fader").fade_out()
-	yield( get_node("Fader"), "fade_finished" )
-	get_tree().quit()
 
 
 
@@ -27,12 +16,11 @@ func QuitGame():
 
 
 func _ready():
-	get_node("Fader").fade_in()
 	get_node("Actions/START").grab_focus()
 	
 	# Show version number
 	var V = GAME.VERSION
-	get_node("Version").set_text( "v%s.%s.%s" % [V.MAJOR, V.MINOR, V.BABY] )
+	get_node("Version").set_text( GAME.get_version_as_string() )
 
 
 
@@ -44,11 +32,11 @@ func _ready():
 
 func _on_START_pressed():
 	print("GPO")
-	StartGame()
+	main.StartGame()
 
 
 func _on_CONTINUE_pressed():
-	LoadGame()
+	main.LoadGame()
 
 
 func _on_OPTIONS_pressed():
@@ -56,5 +44,5 @@ func _on_OPTIONS_pressed():
 
 
 func _on_QUIT_pressed():
-	QuitGame()
+	main.QuitGame()
 
