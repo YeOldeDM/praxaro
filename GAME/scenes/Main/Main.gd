@@ -18,7 +18,6 @@ func LoadGame():
 func QuitGame():
 	fader.fade_out()
 	yield( fader, "fade_finished" )
-	DATA.save_prefs()
 	get_tree().quit()
 
 
@@ -38,7 +37,6 @@ func change_current_scene( scene_path ):
 	get_tree().set_pause(false)
 
 func _ready():
-	DATA.load_prefs()
 	StartTitle()
 
 

@@ -165,8 +165,8 @@ func _fixed_process(delta):
 	
 	# DEBUG CRAP
 	get_node("Vel").set_text( str( int( velocity.x ) ) +", "+ str( int( velocity.y ) ) )
-	if is_in_air() and velocity.y < 0:
-		print(int(velocity.y))
+#	if is_in_air() and velocity.y < 0:
+#		print(int(velocity.y))
 	
 
 
