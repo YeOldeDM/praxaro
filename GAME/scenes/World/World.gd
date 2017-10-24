@@ -19,9 +19,10 @@ var player
 var level
 
 var debug_mode = {
-	"DevMode":		false,
-	"GodMode":		false,
-	"GhostMode":	false,
+	"DevMode":			false,
+	"GodMode":			false,
+	"GhostMode":		false,
+	"HeroDebugMode":	false,
 	}
 
 var main
@@ -68,11 +69,14 @@ func _ready():
 	set_level()
 	
 
+var hero_debug_menu
+
 func _input( event ):
 	# Poll for DEBUG COMMANDS
 	# F1: DevMode
 	# F2: GodMode
 	# F3: GhostMode
+	# F4: HeroDebugMode
 	if event.type == InputEvent.KEY:
 		if event.pressed and !event.is_echo():
 			if event.scancode == KEY_F1:
@@ -93,5 +97,30 @@ func _input( event ):
 					DATA.set_pref( "modes", "GhostMode", debug_mode.GhostMode )
 				else:
 					announce( "DevMode OFF" )
+			elif event.scancode == KEY_F4:
+				if debug_mode.DevMode:
+					debug_mode.HeroDebugMode = !debug_mode.HeroDebugMode
+					announce( "Hero DebugMode " + ["OFF", "ON"][ int(debug_mode.HeroDebugMode) ] )
+					if debug_mode.HeroDebugMode:
+						var menu = preload("res://scenes/HeroDebugMenu/HeroDebugMenu.tscn").instance()
+						HUD.add_child( menu )
+						if player:
+							menu.populate_params( player.get_debug_params() )
+							menu.hero = player
+						hero_debug_menu = menu
+					else:
+						if hero_debug_menu:
+							hero_debug_menu.queue_free()
+							hero_debug_menu = null
+				else:
+					announce( "DevMode OFF" )
+
+
+
+
+
+
+
+
 
 

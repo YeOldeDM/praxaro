@@ -15,10 +15,11 @@ var AIR_MOVE_FORCE = 600
 var FLOOR_STOP_FORCE = 900
 var AIR_STOP_FORCE = 250
 # Max speeds
-var MAX_SPEED = Vector2(68, 600)
+var MAX_SPEED = 68
 # Jump forces
 var JUMP_FORCE = 245
 var JUMP_STOP_FORCE = 12
+
 
 
 var facing = 1 setget _set_facing
@@ -51,8 +52,18 @@ func is_in_air():
 func is_on_ground():
 	return self.airtime <= AIR_MIN_TIME
 
-
-
+func get_debug_params():
+	return [
+	{ "member": "RISING_GRAVITY", "value": RISING_GRAVITY, "min": 10, "max": 5000, "step": 10 },
+	{ "member": "FALLING_GRAVITY", "value": FALLING_GRAVITY, "min": 10, "max": 5000, "step": 10 },
+	{ "member": "FLOOR_MOVE_FORCE", "value": FLOOR_MOVE_FORCE, "min": 10, "max": 2000, "step": 1 },
+	{ "member": "AIR_MOVE_FORCE", "value": AIR_MOVE_FORCE, "min": 10, "max": 2000, "step": 1 },
+	{ "member": "FLOOR_STOP_FORCE", "value": FLOOR_STOP_FORCE, "min": 10, "max": 2000, "step": 1 },
+	{ "member": "AIR_STOP_FORCE", "value": AIR_STOP_FORCE, "min": 10, "max": 2000, "step": 1 },
+	{ "member": "MAX_SPEED", "value": FLOOR_STOP_FORCE, "min": 10, "max": 200, "step": 1 },
+	{ "member": "JUMP_FORCE", "value": JUMP_FORCE, "min": 10, "max": 500, "step": 1 },
+	{ "member": "JUMP_STOP_FORCE", "value": JUMP_STOP_FORCE, "min": 10, "max": 500, "step": 1 },
+	]
 
 
 
@@ -95,7 +106,7 @@ func _fixed_process(delta):
 	# If we can move and horizontal input is positive:
 	if abs(INPUT.x) == 1:
 		# Acelerate up to max speed or change direction
-		if vlen < MAX_SPEED.x or vsign != INPUT.x:
+		if vlen < MAX_SPEED or vsign != INPUT.x:
 			force.x += INPUT.x * A
 		# update new facing
 		new_facing = INPUT.x
@@ -109,7 +120,7 @@ func _fixed_process(delta):
 		var ylen = abs(velocity.y)
 		var ysign = sign(velocity.y)
 		if abs(INPUT.y) == 1:
-			if ylen < MAX_SPEED.x or ysign != INPUT.y:
+			if ylen < MAX_SPEED or ysign != INPUT.y:
 				force.y += INPUT.y * A
 		else:
 			ylen = max( 0, ylen - ( D * delta ) )
@@ -120,7 +131,7 @@ func _fixed_process(delta):
 	# Integrate force into velocity
 	velocity += force * delta
 	# Turn velocity into motion
-	velocity.y = min( velocity.y, MAX_SPEED.y )
+#	velocity.y = min( velocity.y, MAX_SPEED )
 	var motion = move( velocity * delta )
 	
 	
@@ -174,10 +185,7 @@ func _fixed_process(delta):
 	if new_facing != self.facing:
 		self.facing = new_facing
 	
-	# DEBUG CRAP
-	get_node("Vel").set_text( str( int( velocity.x ) ) +", "+ str( int( velocity.y ) ) )
-#	if is_in_air() and velocity.y < 0:
-#		print(int(velocity.y))
+
 	
 
 
