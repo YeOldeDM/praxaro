@@ -1,13 +1,11 @@
-[gd_scene load_steps=5 format=1]
+[gd_scene load_steps=4 format=1]
 
 [ext_resource path="res://res/themes/default_theme.tres" type="Theme" id=1]
 [ext_resource path="res://scenes/Title/Title.gd" type="Script" id=2]
 [ext_resource path="res://assets/graphics/Title/title_splash.png" type="Texture" id=3]
-[ext_resource path="res://scenes/shared/Fader/Fader.tscn" type="PackedScene" id=4]
 
 [node name="Title" type="Control"]
 
-process/pause_mode = 2
 anchor/right = 1
 anchor/bottom = 1
 focus/ignore_mouse = false
@@ -162,8 +160,6 @@ enabled_focus_mode = 2
 shortcut = null
 text = "QUIT"
 flat = true
-
-[node name="Fader" parent="." instance=ExtResource( 4 )]
 
 [connection signal="pressed" from="Actions/START" to="." method="_on_START_pressed" flags=6]
 
