@@ -38,7 +38,7 @@ var jumping = false
 
 var portal	# reference to a portal we're standing in front of
 
-
+var world	# set by World
 
 
 func init( to_level ):
@@ -66,7 +66,7 @@ func _fixed_process(delta):
 	var new_facing = self.facing
 	# Create force
 	var G = FALLING_GRAVITY if velocity.y > MIN_FALLING_VELOCITY else RISING_GRAVITY
-	var force = Vector2(0,G )
+	var force = Vector2( 0, G * int( !world.debug_mode.GhostMode ) )
 	
 	
 	
@@ -104,6 +104,16 @@ func _fixed_process(delta):
 		vlen = max( 0, vlen - ( D * delta ) )
 		velocity.x = vlen * vsign
 	
+	if world.debug_mode.GhostMode:
+		if JUMP: INPUT.y = -1
+		var ylen = abs(velocity.y)
+		var ysign = sign(velocity.y)
+		if abs(INPUT.y) == 1:
+			if ylen < MAX_SPEED.x or ysign != INPUT.y:
+				force.y += INPUT.y * A
+		else:
+			ylen = max( 0, ylen - ( D * delta ) )
+			velocity.y = ylen * ysign
 	
 	
 	### DIRECT MOTION ###
@@ -130,12 +140,13 @@ func _fixed_process(delta):
 	
 	
 	### JUMPING ###
-	if JUMP and !pressed.JUMP and not jumping and is_on_ground() and can_move:
-		velocity.y = -JUMP_FORCE
-		self.jumping = true
-	# Kill upward vertical movement if JUMP control is let go
-	if jumping and !JUMP and is_in_air() and velocity.y < -JUMP_STOP_FORCE:
-		velocity.y = JUMP_STOP_FORCE#+= JUMP_STOP_FORCE * delta
+	if not world.debug_mode.GhostMode:
+		if JUMP and !pressed.JUMP and not jumping and is_on_ground() and can_move:
+			velocity.y = -JUMP_FORCE
+			self.jumping = true
+		# Kill upward vertical movement if JUMP control is let go
+		if jumping and !JUMP and is_in_air() and velocity.y < -JUMP_STOP_FORCE:
+			velocity.y = JUMP_STOP_FORCE#+= JUMP_STOP_FORCE * delta
 	
 	### STRIKING ###
 	if STRIKE and !pressed.STRIKE:

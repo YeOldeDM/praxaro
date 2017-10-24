@@ -55,6 +55,7 @@ func spawn_player():
 	var p = load( player_scene_path )
 	p = p.instance()
 	self.player = p
+	player.world = self
 
 func announce( message ):
 	DebugOutput.set_text( message )
