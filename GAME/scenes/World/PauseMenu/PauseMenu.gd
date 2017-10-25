@@ -30,9 +30,8 @@ func _on_RESUME_pressed():
 
 
 func _on_TOMENU_pressed():
-	get_tree().set_pause(false)
-	get_tree().change_scene_to( GAME.TITLE_SCENE )
+	get_node("/root/Main").StartTitle()
 
 
 func _on_QUIT_pressed():
-	get_tree().quit()
+	get_node("/root/Main").QuitGame()

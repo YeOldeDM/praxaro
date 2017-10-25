@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=1]
 
 [ext_resource path="res://res/themes/default_theme.tres" type="Theme" id=1]
-[ext_resource path="res://scenes/Game/PauseMenu/PauseMenu.gd" type="Script" id=2]
+[ext_resource path="res://scenes/World/PauseMenu/PauseMenu.gd" type="Script" id=2]
 
 [node name="PauseMenu" type="PanelContainer"]
 
@@ -23,10 +23,10 @@ focus/ignore_mouse = false
 focus/stop_mouse = false
 size_flags/horizontal = 2
 size_flags/vertical = 2
-margin/left = 8.0
-margin/top = 8.0
-margin/right = 344.0
-margin/bottom = 152.0
+margin/left = 7.0
+margin/top = 7.0
+margin/right = 345.0
+margin/bottom = 153.0
 alignment = 0
 
 [node name="Label" type="Label" parent="VBoxContainer"]
@@ -37,8 +37,8 @@ size_flags/horizontal = 3
 size_flags/vertical = 3
 margin/left = 0.0
 margin/top = 0.0
-margin/right = 336.0
-margin/bottom = 70.0
+margin/right = 338.0
+margin/bottom = 71.0
 text = "PAUSED"
 align = 1
 valign = 1
@@ -53,9 +53,9 @@ focus/stop_mouse = false
 size_flags/horizontal = 3
 size_flags/vertical = 3
 margin/left = 0.0
-margin/top = 74.0
-margin/right = 336.0
-margin/bottom = 144.0
+margin/top = 75.0
+margin/right = 338.0
+margin/bottom = 146.0
 alignment = 0
 
 [node name="RESUME" type="Button" parent="VBoxContainer/VBoxContainer"]
@@ -64,9 +64,9 @@ focus/ignore_mouse = false
 focus/stop_mouse = true
 size_flags/horizontal = 0
 size_flags/vertical = 0
-margin/left = 141.0
+margin/left = 142.0
 margin/top = 0.0
-margin/right = 194.0
+margin/right = 195.0
 margin/bottom = 18.0
 toggle_mode = false
 enabled_focus_mode = 2
@@ -80,9 +80,9 @@ focus/ignore_mouse = false
 focus/stop_mouse = true
 size_flags/horizontal = 0
 size_flags/vertical = 0
-margin/left = 109.0
+margin/left = 110.0
 margin/top = 22.0
-margin/right = 227.0
+margin/right = 228.0
 margin/bottom = 40.0
 toggle_mode = false
 enabled_focus_mode = 2
@@ -96,9 +96,9 @@ focus/ignore_mouse = false
 focus/stop_mouse = true
 size_flags/horizontal = 0
 size_flags/vertical = 0
-margin/left = 120.0
+margin/left = 121.0
 margin/top = 44.0
-margin/right = 215.0
+margin/right = 216.0
 margin/bottom = 62.0
 toggle_mode = false
 enabled_focus_mode = 2
