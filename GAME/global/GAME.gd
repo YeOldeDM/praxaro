@@ -3,7 +3,7 @@ extends Node
 const VERSION = {
 		"MAJOR":	0,
 		"MINOR":	0,
-		"BABY":		4
+		"BABY":		5
 		}
 
 const TITLE_SCENE = "res://scenes/Title/Title.tscn"
