@@ -1,0 +1,62 @@
+[gd_resource type="Theme" load_steps=8 format=1]
+
+[ext_resource path="res://assets/graphics/icons/small_spinbox_updown.png" type="Texture" id=1]
+[ext_resource path="res://res/styles/border_simple_black_white.tres" type="StyleBox" id=2]
+[ext_resource path="res://assets/fonts/04B_03__.TTF" type="DynamicFontData" id=3]
+
+[sub_resource type="StyleBoxFlat" id=3]
+
+content_margin/left = 0.0
+content_margin/right = 0.0
+content_margin/top = 0.0
+content_margin/bottom = 0.0
+bg_color = Color( 0, 0, 0, 1 )
+light_color = Color( 0.8, 0.8, 0.8, 1 )
+dark_color = Color( 0.8, 0.8, 0.8, 1 )
+border_size = 1
+border_blend = true
+draw_bg = false
+
+[sub_resource type="StyleBoxEmpty" id=1]
+
+content_margin/left = -1.0
+content_margin/right = -1.0
+content_margin/top = -1.0
+content_margin/bottom = -1.0
+
+[sub_resource type="StyleBoxFlat" id=4]
+
+content_margin/left = 2.0
+content_margin/right = 2.0
+content_margin/top = 0.0
+content_margin/bottom = 0.0
+bg_color = Color( 0, 0, 0, 1 )
+light_color = Color( 0.8, 0.8, 0.8, 1 )
+dark_color = Color( 0.8, 0.8, 0.8, 1 )
+border_size = 0
+border_blend = true
+draw_bg = true
+
+[sub_resource type="DynamicFont" id=2]
+
+font/size = 8
+font/use_mipmaps = false
+font/use_filter = false
+font/font = ExtResource( 3 )
+
+[resource]
+
+default_font = SubResource( 2 )
+HSeparator/styles/separator = SubResource( 3 )
+HSlider/icons/grabber = ExtResource( 1 )
+HSlider/icons/grabber_hilite = ExtResource( 1 )
+HSlider/styles/grabber_hilite = SubResource( 1 )
+HSlider/styles/slider = ExtResource( 2 )
+LineEdit/styles/normal = ExtResource( 2 )
+PanelContainer/styles/panel = ExtResource( 2 )
+SpinBox/icons/updown = ExtResource( 1 )
+VScrollBar/styles/grabber = ExtResource( 2 )
+VScrollBar/styles/grabber_hilite = ExtResource( 2 )
+VScrollBar/styles/scroll = SubResource( 4 )
+VScrollBar/styles/scroll_focus = ExtResource( 2 )
+

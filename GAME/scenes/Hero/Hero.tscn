@@ -36,6 +36,8 @@ _update_shape_index = 0
 
 [node name="Sprite" type="Node2D" parent="."]
 
+editor/display_folded = true
+
 [node name="Body" type="Sprite" parent="Sprite"]
 
 texture = ExtResource( 2 )
@@ -89,19 +91,5 @@ drag_margin/top = 0.2
 drag_margin/right = 0.2
 drag_margin/bottom = 0.2
 script/script = ExtResource( 3 )
-
-[node name="Vel" type="Label" parent="."]
-
-focus/ignore_mouse = true
-focus/stop_mouse = true
-size_flags/horizontal = 2
-size_flags/vertical = 0
-margin/left = -20.0
-margin/top = -31.0
-margin/right = 20.0
-margin/bottom = -17.0
-percent_visible = 1.0
-lines_skipped = 0
-max_lines_visible = -1
 
 
