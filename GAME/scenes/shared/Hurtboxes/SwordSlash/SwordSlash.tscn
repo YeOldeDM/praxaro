@@ -95,7 +95,7 @@ visibility/blend_mode = 1
 texture = ExtResource( 2 )
 vframes = 2
 hframes = 6
-frame = 11
+frame = 5
 
 [node name="Animator" type="AnimationPlayer" parent="."]
 
@@ -105,7 +105,7 @@ root/root = NodePath("..")
 anims/slash1 = SubResource( 2 )
 anims/slash2 = SubResource( 3 )
 playback/active = true
-playback/speed = 1.0
+playback/speed = 2.0
 blend_times = [  ]
 autoplay = ""
 

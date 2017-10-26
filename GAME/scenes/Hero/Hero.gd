@@ -23,6 +23,7 @@ var JUMP_STOP_FORCE = 12
 
 
 var facing = 1 setget _set_facing
+var anim = "idle" setget _set_anim
 
 var velocity = Vector2()
 var ext_force = Vector2()
@@ -34,6 +35,7 @@ var pressed = {
 	}
 
 var can_move = true
+var is_striking = false
 
 var airtime = 0
 var jumping = false
@@ -74,7 +76,21 @@ func hero_take_strike( from ):
 	else:
 		print( "OW!" )
 
+func begin_strike():
+#	self.anim = "strike"
+	self.is_striking = true
 
+
+func make_strike():
+	var slash = preload("res://scenes/shared/Hurtboxes/SwordSlash/SwordSlash.tscn").instance()
+	add_child(slash)
+	slash.set_scale( Vector2( self.facing, 1 ) )
+	slash.start( self )
+
+func end_strike():
+	self.is_striking = false
+	self.anim = "idle"
+	print("done")
 
 func _ready():
 	set_fixed_process(true)
@@ -84,6 +100,7 @@ func _fixed_process(delta):
 	### SETUP ###
 	var hit_ground = false
 	var new_facing = self.facing
+	var new_anim = self.anim
 	# Create force
 	var G = FALLING_GRAVITY if velocity.y > MIN_FALLING_VELOCITY else RISING_GRAVITY
 	var force = Vector2( 0, G * int( !world.debug_mode.GhostMode ) )
@@ -101,7 +118,9 @@ func _fixed_process(delta):
 	var STRIKE = Input.is_action_pressed("STRIKE")
 	
 	# Covert directional input into a Vector
-	var INPUT = Vector2( RIGHT - LEFT, DOWN - UP ) * int(self.can_move) 
+	var INPUT = Vector2( RIGHT - LEFT, DOWN - UP ) * int(self.can_move)
+	if is_on_ground() and is_striking:
+		INPUT.x = 0
 	var vsign = sign(velocity.x)
 	var vlen = abs(velocity.x)
 	
@@ -119,10 +138,12 @@ func _fixed_process(delta):
 			force.x += INPUT.x * A
 		# update new facing
 		new_facing = INPUT.x
+
 	# otherwise decelerate toward zero speed
 	else:
 		vlen = max( 0, vlen - ( D * delta ) )
 		velocity.x = vlen * vsign
+
 	
 	if world.debug_mode.GhostMode:
 		if JUMP: INPUT.y = -1
@@ -157,11 +178,20 @@ func _fixed_process(delta):
 			self.airtime = 0
 			if self.jumping:
 				self.jumping = false
+			if !is_striking:
+				if abs(velocity.x) > 1:
+					new_anim = "walk"
+				else:
+					new_anim = "idle"
+
 		
 		velocity = N.slide( velocity )
 		motion = N.slide( motion )
 		move(motion)
-	
+		
+	else:
+		if !is_striking:
+			new_anim = "jump"
 	
 	
 	### JUMPING ###
@@ -169,16 +199,15 @@ func _fixed_process(delta):
 		if JUMP and !pressed.JUMP and not jumping and is_on_ground() and can_move:
 			velocity.y = -JUMP_FORCE
 			self.jumping = true
+
 		# Kill upward vertical movement if JUMP control is let go
 		if jumping and !JUMP and is_in_air() and velocity.y < -JUMP_STOP_FORCE:
 			velocity.y = JUMP_STOP_FORCE#+= JUMP_STOP_FORCE * delta
 	
 	### STRIKING ###
-	if STRIKE and !pressed.STRIKE:
-		var slash = preload("res://scenes/shared/Hurtboxes/SwordSlash/SwordSlash.tscn").instance()
-		add_child(slash)
-		slash.set_scale( Vector2( self.facing, 1 ) )
-		slash.start( self, randi()%2 )
+	if STRIKE and !pressed.STRIKE and !is_striking:
+		begin_strike()
+		new_anim = "strike"
 	
 	# Use w/ UP
 	if !pressed.UP and INPUT == Vector2(0,-1):
@@ -199,6 +228,8 @@ func _fixed_process(delta):
 	if new_facing != self.facing:
 		self.facing = new_facing
 	
+	if new_anim != self.anim:
+		self.anim = new_anim
 
 	
 
@@ -210,3 +241,9 @@ func _set_facing(what):
 	facing = what
 	if has_node("Sprite"):
 		get_node("Sprite").set_scale( Vector2( facing, 1 ) )
+
+func _set_anim( what ):
+	anim = what
+	if has_node("Animator"):
+		get_node("Animator").play( anim )
+	print(anim)
