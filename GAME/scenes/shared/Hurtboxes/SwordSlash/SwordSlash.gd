@@ -21,9 +21,11 @@ func _strike():
 		if body != owner:
 			if body.has_method("take_strike"):
 				_hit( body )
+				
 
 func _hit( body ):
 	body.take_strike( self )
 	var va = -( body.get_pos() - owner.get_pos() ).normalized()
 	va *= self.strike_kickback
 	owner.ext_force += va
+	owner.get_node("Camera").shake( 2 )
