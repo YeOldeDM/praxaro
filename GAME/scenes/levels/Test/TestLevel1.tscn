@@ -28,6 +28,10 @@ target_level = "res://scenes/levels/Test/TestLevel2.tscn"
 
 [node name="Goblin" parent="." instance=ExtResource( 3 )]
 
+transform/pos = Vector2( 39, 152 )
+
+[node name="Goblin1" parent="." instance=ExtResource( 3 )]
+
 transform/pos = Vector2( 39, 88 )
 
 [node name="Snail" parent="." instance=ExtResource( 4 )]

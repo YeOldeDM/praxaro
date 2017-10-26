@@ -18,7 +18,7 @@ func die():
 	kill()
 
 func take_strike( from ):
-	self.hits -= 1
+#	self.hits -= 1
 	if self.hits <= 0:	die()
 
 

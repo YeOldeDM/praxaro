@@ -29,3 +29,9 @@ func _hit( body ):
 	va *= self.strike_kickback
 	owner.ext_force += va
 	owner.get_node("Camera").shake( 2 )
+	
+	var blood = preload("res://scenes/shared/Gore/BloodSpray.tscn").instance()
+	body.get_parent().add_child(blood)
+	blood.set_pos( body.get_pos() )
+	blood.set_scale( Vector2( sign(va.x), 1 ) )
+	blood.set_rot( deg2rad( rand_range( -5, 5 ) ) )
