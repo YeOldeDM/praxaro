@@ -20,9 +20,9 @@ const HERO_PRESETS_PATH = "user://hero_presets.cfg"
 var PREFS_TEMPLATE = {
 		"modes":
 			{
-			"DevMode":		false,
-			"GodMode":		false,
-			"GhostMode":	false,
+			"DevMode":			false,
+			"GodMode":			false,
+			"GhostMode":		false,
 			},
 
 		# VERSION DATA: CAN'T TOUCH THIS!
@@ -58,7 +58,7 @@ func set_pref( cat, key, value ):
 	_prefs.set_value( cat, key, value )
 
 func get_pref( cat, key ):
-	return _prefs.get_value( cat, key )
+	return _prefs.get_value( cat, key, false )
 
 
 

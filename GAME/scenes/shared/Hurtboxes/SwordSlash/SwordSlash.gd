@@ -4,7 +4,7 @@ var owner
 
 var anims = [ "slash1","slash2" ]
 
-
+var strike_kickback = 180
 
 func start( from, anim=0 ):
 	self.owner = from
@@ -20,5 +20,10 @@ func _strike():
 	for body in hits:
 		if body != owner:
 			if body.has_method("take_strike"):
-				body.take_strike( self )
+				_hit( body )
 
+func _hit( body ):
+	body.take_strike( self )
+	var va = -( body.get_pos() - owner.get_pos() ).normalized()
+	va *= self.strike_kickback
+	owner.ext_force += va

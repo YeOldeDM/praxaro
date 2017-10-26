@@ -25,6 +25,7 @@ var JUMP_STOP_FORCE = 12
 var facing = 1 setget _set_facing
 
 var velocity = Vector2()
+var ext_force = Vector2()
 
 var pressed = {
 	"JUMP":	false,
@@ -64,6 +65,14 @@ func get_debug_params():
 	{ "member": "JUMP_FORCE", "value": JUMP_FORCE, "min": 10, "max": 500, "step": 1 },
 	{ "member": "JUMP_STOP_FORCE", "value": JUMP_STOP_FORCE, "min": 10, "max": 500, "step": 1 },
 	]
+
+func hero_take_strike( from ):
+	print( "I am hurt by %s!" % from.get_name() )
+	if world.debug_mode.DevMode:
+		if world.debug_mode.GodMode:
+			print( "I am sparta!" )
+	else:
+		print( "OW!" )
 
 
 
@@ -130,6 +139,11 @@ func _fixed_process(delta):
 	### DIRECT MOTION ###
 	# Integrate force into velocity
 	velocity += force * delta
+	if ext_force.length() > 1:
+		velocity += ext_force
+		ext_force = Vector2()
+	else:
+		ext_force *= 0.95
 	# Turn velocity into motion
 #	velocity.y = min( velocity.y, MAX_SPEED )
 	var motion = move( velocity * delta )

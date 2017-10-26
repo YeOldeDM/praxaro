@@ -3,12 +3,12 @@
 [ext_resource path="res://scenes/shared/Hurtboxes/SwordSlash/SwordSlash.gd" type="Script" id=1]
 [ext_resource path="res://assets/graphics/fx/slash2.png" type="Texture" id=2]
 
-[sub_resource type="RectangleShape2D" id=3]
+[sub_resource type="RectangleShape2D" id=1]
 
 custom_solver_bias = 0.0
 extents = Vector2( 12, 6 )
 
-[sub_resource type="Animation" id=4]
+[sub_resource type="Animation" id=2]
 
 resource/name = "slash1"
 length = 0.35
@@ -40,7 +40,7 @@ tracks/1/keys = {
 } ]
 }
 
-[sub_resource type="Animation" id=5]
+[sub_resource type="Animation" id=3]
 
 resource/name = "slash2"
 length = 0.35
@@ -72,16 +72,20 @@ tracks/1/keys = {
 } ]
 }
 
-[node name="SwordSlash" type="Area2D"]
+[node name="SwordSlash" type="Area2D" groups=[
+"hero_hurtbox",
+]]
 
 input/pickable = true
-shapes/0/shape = SubResource( 3 )
+shapes/0/shape = SubResource( 1 )
 shapes/0/transform = Matrix32( 1, 0, 0, 1, 20, 0 )
 shapes/0/trigger = false
 gravity_vec = Vector2( 0, 1 )
 gravity = 98.0
 linear_damp = 0.1
 angular_damp = 1.0
+collision/layers = 2
+collision/mask = 2
 script/script = ExtResource( 1 )
 
 [node name="Sprite" type="Sprite" parent="."]
@@ -98,8 +102,8 @@ frame = 11
 playback/process_mode = 1
 playback/default_blend_time = 0.0
 root/root = NodePath("..")
-anims/slash1 = SubResource( 4 )
-anims/slash2 = SubResource( 5 )
+anims/slash1 = SubResource( 2 )
+anims/slash2 = SubResource( 3 )
 playback/active = true
 playback/speed = 1.0
 blend_times = [  ]
@@ -108,7 +112,7 @@ autoplay = ""
 [node name="Hurtbox" type="CollisionShape2D" parent="."]
 
 transform/pos = Vector2( 20, 0 )
-shape = SubResource( 3 )
+shape = SubResource( 1 )
 trigger = false
 _update_shape_index = 0
 
