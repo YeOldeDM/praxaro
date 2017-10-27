@@ -5,8 +5,8 @@ signal saved_data()
 
 
 ###	DATA SINGLETON ###
-
-#	Handle save game data and user preferences
+# Handle save game data and user preferences
+# held in the local user:// directory
 
 
 
@@ -31,7 +31,7 @@ var PREFS_TEMPLATE = {
 			"version":	GAME.VERSION,
 			},
 		}
-
+# Only include new sections/keys on version change!
 var HERO_PRESETS_TEMPLATE = {
 		"standard":
 			{
@@ -151,9 +151,8 @@ func _ready():
 	file.close()
 
 
-
-func _notification( what ):
-	if what == MainLoop.NOTIFICATION_WM_QUIT_REQUEST:
-		save_file( _prefs, PREFS_PATH )
-		save_file( _hero_presets, HERO_PRESETS_PATH )
-		emit_signal( "saved_data" )
+###		SAVE ALL DATA HANDLED IN THIS SCRIPT	###
+func save_all():
+	save_file( _prefs, PREFS_PATH )
+	save_file( _hero_presets, HERO_PRESETS_PATH )
+	emit_signal( "saved_data" )

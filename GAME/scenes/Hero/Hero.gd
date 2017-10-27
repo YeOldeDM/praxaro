@@ -1,12 +1,15 @@
 extends KinematicBody2D
 
 # Personal Gravity forces
-var RISING_GRAVITY = 480
-var FALLING_GRAVITY = 800
-var MIN_FALLING_VELOCITY = 0
+
+var RISING_GRAVITY = 480	# while velocity.y < MIN_FALLING_VELOCITY
+var FALLING_GRAVITY = 800	# while velocity.y > MIN_FALLING_VELOCITY
+
 
 # The min amount of sec you must be airborne to be considered "in the air"
 var AIR_MIN_TIME = 0.12
+# Min velocity.y to be considered "falling"
+var MIN_FALLING_VELOCITY = 4
 
 # horizontal Acceleration forces
 var FLOOR_MOVE_FORCE = 800
@@ -21,40 +24,59 @@ var JUMP_FORCE = 245
 var JUMP_STOP_FORCE = 12
 
 
-
+# Facing property
 var facing = 1 setget _set_facing
+# Animation property
 var anim = "idle" setget _set_anim
 
+# Current velocity
 var velocity = Vector2()
+# External ( kickback ) forces
 var ext_force = Vector2()
 
+# Key pulse flags
+# (hack until we have is_action_just_pressed)
 var pressed = {
 	"JUMP":	false,
 	"STRIKE":	false,
 	"UP":	false,
 	}
 
+# State flags
 var can_move = true
 var is_striking = false
-
-var airtime = 0
 var jumping = false
 
-var portal	# reference to a portal we're standing in front of
+# Seconds spent airborne
+var airtime = 0
 
-var world	# set by World
+# reference to a portal we're standing in front of
+# set/unset by that portal
+var portal = null
+
+# Reference to World, set by World
+var world	
 
 
+
+
+
+
+# Initialize the Hero
+# (Should be called "start()"?)
 func init( to_level ):
 	get_node("Camera").set_limits( to_level.get_boundry_rect() )
 	self.can_move = true
 
+# Check if we're in the air
 func is_in_air():
 	return self.airtime >= AIR_MIN_TIME
 
+# Check if we're on the ground
 func is_on_ground():
 	return self.airtime <= AIR_MIN_TIME
 
+# Return big debug param dictionary for HeroDebugMode
 func get_debug_params():
 	return [
 	{ "member": "RISING_GRAVITY", "value": RISING_GRAVITY, "min": 10, "max": 5000, "step": 10 },
@@ -68,6 +90,7 @@ func get_debug_params():
 	{ "member": "JUMP_STOP_FORCE", "value": JUMP_STOP_FORCE, "min": 10, "max": 500, "step": 1 },
 	]
 
+# Special take_strike method unique to Me
 func hero_take_strike( from ):
 	print( "I am hurt by %s!" % from.get_name() )
 	if world.debug_mode.DevMode:
@@ -76,26 +99,32 @@ func hero_take_strike( from ):
 	else:
 		print( "OW!" )
 
+# Initialize a STRIKE state
+# ("strike" animation should be set
+# alongside this call)
 func begin_strike():
-#	self.anim = "strike"
 	self.is_striking = true
 
-
+# Create the STRIKE hurtbox
+# called by "strike" animation
 func make_strike():
 	var slash = preload("res://scenes/shared/Hurtboxes/SwordSlash/SwordSlash.tscn").instance()
 	add_child(slash)
 	slash.set_scale( Vector2( self.facing, 1 ) )
 	slash.start( self )
 
+# End a STRIKE state
+# called by the last frame of the "strike" animation
 func end_strike():
 	self.is_striking = false
 	self.anim = "idle"
-	print("done")
+
 
 func _ready():
 	set_fixed_process(true)
 
 
+###		HERO PROCESS LOOP	###
 func _fixed_process(delta):
 	### SETUP ###
 	var hit_ground = false
@@ -172,6 +201,7 @@ func _fixed_process(delta):
 	
 	### COLLISION HANDLING ###
 	if is_colliding():
+		print( get_collider_metadata() )
 		var N = get_collision_normal()
 		var A = rad2deg(acos(N.dot(Vector2(0, -1))))
 		if A <= 20:
@@ -235,7 +265,7 @@ func _fixed_process(delta):
 
 
 
-
+###	SETTERS	###
 
 func _set_facing(what):
 	facing = what

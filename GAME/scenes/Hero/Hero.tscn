@@ -48,7 +48,7 @@ tracks/0/keys = {
 "values": [ 12 ]
 }
 
-[sub_resource type="Animation" id=6]
+[sub_resource type="Animation" id=5]
 
 resource/name = "strike"
 length = 0.5
@@ -80,9 +80,8 @@ tracks/1/keys = {
 } ]
 }
 
-[sub_resource type="Animation" id=5]
+[sub_resource type="Animation" id=6]
 
-resource/name = "walk"
 length = 0.8
 loop = true
 step = 0.1
@@ -182,8 +181,8 @@ playback/default_blend_time = 0.0
 root/root = NodePath("..")
 anims/idle = SubResource( 3 )
 anims/jump = SubResource( 4 )
-anims/strike = SubResource( 6 )
-anims/walk = SubResource( 5 )
+anims/strike = SubResource( 5 )
+anims/walk = SubResource( 6 )
 playback/active = true
 playback/speed = 1.0
 blend_times = [  ]

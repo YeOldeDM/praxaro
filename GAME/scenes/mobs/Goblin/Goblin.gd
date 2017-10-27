@@ -4,7 +4,7 @@ var facing = 1 setget _set_facing
 
 var hits = 3
 
-var walk_speed = 22
+var walk_speed = 6
 
 var turn_time = 0
 
