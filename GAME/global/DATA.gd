@@ -5,8 +5,8 @@ signal saved_data()
 
 
 ###	DATA SINGLETON ###
-
-#	Handle save game data and user preferences
+# Handle save game data and user preferences
+# held in the local user:// directory
 
 
 
@@ -20,9 +20,9 @@ const HERO_PRESETS_PATH = "user://hero_presets.cfg"
 var PREFS_TEMPLATE = {
 		"modes":
 			{
-			"DevMode":		false,
-			"GodMode":		false,
-			"GhostMode":	false,
+			"DevMode":			false,
+			"GodMode":			false,
+			"GhostMode":		false,
 			},
 
 		# VERSION DATA: CAN'T TOUCH THIS!
@@ -31,7 +31,7 @@ var PREFS_TEMPLATE = {
 			"version":	GAME.VERSION,
 			},
 		}
-
+# Only include new sections/keys on version change!
 var HERO_PRESETS_TEMPLATE = {
 		"standard":
 			{
@@ -58,7 +58,7 @@ func set_pref( cat, key, value ):
 	_prefs.set_value( cat, key, value )
 
 func get_pref( cat, key ):
-	return _prefs.get_value( cat, key )
+	return _prefs.get_value( cat, key, false )
 
 
 
@@ -151,9 +151,8 @@ func _ready():
 	file.close()
 
 
-
-func _notification( what ):
-	if what == MainLoop.NOTIFICATION_WM_QUIT_REQUEST:
-		save_file( _prefs, PREFS_PATH )
-		save_file( _hero_presets, HERO_PRESETS_PATH )
-		emit_signal( "saved_data" )
+###		SAVE ALL DATA HANDLED IN THIS SCRIPT	###
+func save_all():
+	save_file( _prefs, PREFS_PATH )
+	save_file( _hero_presets, HERO_PRESETS_PATH )
+	emit_signal( "saved_data" )
