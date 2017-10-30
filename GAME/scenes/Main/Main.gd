@@ -53,6 +53,8 @@ func change_current_scene( scene_path ):
 
 ### 	!!ROOT GAME INIT!!	###
 func _ready():
+	var rect = get_viewport().get_rect()
+	print(rect)
 	# Bootstrap the Title scene
 	StartTitle()
 	

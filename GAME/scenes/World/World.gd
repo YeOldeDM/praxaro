@@ -7,6 +7,7 @@ extends Node2D
 
 
 onready var HUD = get_node("HUD/Frame")
+onready var LifePips = HUD.get_node("LifePips")
 onready var DebugOutput = HUD.get_node("DebugOutput")
 
 
@@ -14,6 +15,9 @@ export(String, FILE, "*.tscn") var player_scene_path
 export(String, FILE, "*.tscn") var DEFAULT_STARTING_LEVEL
 # Reference to the player node. Defined when player spawns
 var player
+
+var hero_max_life = 5 setget _set_hero_max_life
+var hero_life = 5 setget _set_hero_life
 
 # Reference to the current level scene. Defined when we set_level
 var level
@@ -68,6 +72,9 @@ func _ready():
 	set_process_input(true)
 	set_level()
 	
+	self.hero_max_life = self.hero_max_life
+	self.hero_life = self.hero_life
+	
 
 var hero_debug_menu
 
@@ -117,7 +124,13 @@ func _input( event ):
 
 
 
+func _set_hero_max_life( what ):
+	hero_max_life = what
+	LifePips.set_hero_max_life( hero_max_life )
 
+func _set_hero_life( what ):
+	hero_life = what
+	LifePips.set_hero_life( hero_life )
 
 
 
