@@ -1,0 +1,20 @@
+[gd_scene load_steps=3 format=1]
+
+[ext_resource path="res://scenes/level_components/WarpPoint.gd" type="Script" id=1]
+[ext_resource path="res://assets/graphics/Hero/heroguy_spritesheet.png" type="Texture" id=2]
+
+[node name="WarpPoint" type="Position2D"]
+
+transform/pos = Vector2( 160, 160 )
+script/script = ExtResource( 1 )
+facing = 0
+
+[node name="Sprite" type="Sprite" parent="."]
+
+visibility/self_opacity = 0.5
+texture = ExtResource( 2 )
+vframes = 3
+hframes = 8
+frame = 8
+
+

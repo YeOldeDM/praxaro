@@ -98,6 +98,7 @@ func hero_take_strike( from ):
 			print( "I am sparta!" )
 	else:
 		print( "OW!" )
+	world.hero_life -= 1
 
 # Initialize a STRIKE state
 # ("strike" animation should be set
@@ -201,7 +202,6 @@ func _fixed_process(delta):
 	
 	### COLLISION HANDLING ###
 	if is_colliding():
-		print( get_collider_metadata() )
 		var N = get_collision_normal()
 		var A = rad2deg(acos(N.dot(Vector2(0, -1))))
 		if A <= 20:
