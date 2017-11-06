@@ -36,7 +36,7 @@ font/font = ExtResource( 5 )
 process/pause_mode = 1
 script/script = ExtResource( 1 )
 player_scene_path = "res://scenes/Hero/Hero.tscn"
-DEFAULT_STARTING_LEVEL = "res://scenes/levels/Test/TestLevel1.tscn"
+DEFAULT_STARTING_LEVEL = "res://scenes/levels/BarkTemple/BarkTemple.tscn"
 
 [node name="HUD" type="CanvasLayer" parent="."]
 
@@ -100,6 +100,10 @@ autostart = false
 
 transform/pos = Vector2( 16, 208 )
 script/script = ExtResource( 6 )
+
+[node name="AmbientLight" type="CanvasModulate" parent="."]
+
+color = Color( 0.438904, 0.535048, 0.550781, 1 )
 
 [connection signal="timeout" from="HUD/Frame/DebugOutput/Timer" to="HUD/Frame/DebugOutput" method="set_text" binds= [ "" ]]
 

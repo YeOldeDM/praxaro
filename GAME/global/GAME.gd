@@ -22,3 +22,5 @@ const WORLD_SCENE = "res://scenes/World/World.tscn"
 # Return the version no. as a string: "1.2.3"
 func get_version_as_string():
 	return "v%s.%s.%s" % [VERSION.MAJOR, VERSION.MINOR, VERSION.BABY] 
+	
+

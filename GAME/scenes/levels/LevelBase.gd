@@ -13,6 +13,7 @@ func get_boundry_rect():
 func _ready():
 	self.hide_colmap = self.hide_colmap
 	self.hide_boundry = self.hide_boundry
+	
 
 
 func _set_hide_colmap( hidden ):

@@ -55,6 +55,10 @@ func set_level( level_scene=DEFAULT_STARTING_LEVEL, spawn_point=null ):
 
 	
 	
+func hero_dies():
+	if player:
+		announce( "you have died..." )
+		player.die()
 
 func spawn_player():
 	var p = load( player_scene_path )
@@ -84,6 +88,7 @@ func _input( event ):
 	# F2: GodMode
 	# F3: GhostMode
 	# F4: HeroDebugMode
+	# F12: Hero Puncher
 	if event.type == InputEvent.KEY:
 		if event.pressed and !event.is_echo():
 			if event.scancode == KEY_F1:
@@ -122,6 +127,14 @@ func _input( event ):
 				else:
 					announce( "DevMode OFF" )
 
+			elif event.scancode == KEY_F12:
+				if debug_mode.DevMode:
+					if player:
+						player.hero_take_strike()
+						announce( "Oh the indignity!" )
+				else:
+					announce( "DevMode OFF" )
+
 
 
 func _set_hero_max_life( what ):
@@ -131,6 +144,9 @@ func _set_hero_max_life( what ):
 func _set_hero_life( what ):
 	hero_life = what
 	LifePips.set_hero_life( hero_life )
+	
+	if hero_life < 0:
+		hero_dies()
 
 
 

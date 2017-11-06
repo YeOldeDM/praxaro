@@ -7,6 +7,7 @@ extends Node2D
 # Holds the highest-most game methods/members
 
 
+
 # Screen Fader node
 onready var fader = get_node("Fader")
 
@@ -48,6 +49,7 @@ func change_current_scene( scene_path ):
 	if "main" in scene:
 		scene.main = self
 	fader.fade_in()
+	get_tree().call_deferred( "call_group", 0, "spawners", "spawn", self )
 	get_tree().set_pause(false)
 
 
@@ -57,6 +59,7 @@ func _ready():
 	print(rect)
 	# Bootstrap the Title scene
 	StartTitle()
+
 	
 
 # Called when the game is quit outside the engine
