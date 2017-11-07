@@ -35,7 +35,7 @@ font/font = ExtResource( 5 )
 
 process/pause_mode = 1
 script/script = ExtResource( 1 )
-player_scene_path = "res://scenes/Hero/Hero.tscn"
+hero_scene_path = "res://scenes/Hero/Hero.tscn"
 DEFAULT_STARTING_LEVEL = "res://scenes/levels/BarkTemple/BarkTemple.tscn"
 
 [node name="HUD" type="CanvasLayer" parent="."]
