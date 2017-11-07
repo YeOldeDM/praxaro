@@ -1,7 +1,15 @@
 # praxaro changelog
 
+# 0.0.6	CURRENT VERSION
+-Added a simple Health/Death system for the player Hero
+-Added new level-building components: WarpPoint & SpawnSnail
+-Brought in a new "BrownBlocks" tileset
+-Hurt the hero by hitting F12 (to help debug the health system)
 
-# 0.0.5:  CURRENT VERSION
+
+
+
+# 0.0.5: 
 -Added this changelog file ;)  
 -Added GodMode(F2) 
 -Added new mob: "Goblin"  

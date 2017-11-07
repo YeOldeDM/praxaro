@@ -2,8 +2,8 @@ extends Node2D
 
 ###
 # Game: 
-#   -Handles high-level main game functions( change levels, spawn player, etc )
-#   -Handles player stats: HP/MP, XP, GP, etc
+#   -Handles high-level main game functions( change levels, spawn hero, etc )
+#   -Handles hero stats: HP/MP, XP, GP, etc
 
 
 onready var HUD = get_node("HUD/Frame")
@@ -11,10 +11,10 @@ onready var LifePips = HUD.get_node("LifePips")
 onready var DebugOutput = HUD.get_node("DebugOutput")
 
 
-export(String, FILE, "*.tscn") var player_scene_path
+export(String, FILE, "*.tscn") var hero_scene_path
 export(String, FILE, "*.tscn") var DEFAULT_STARTING_LEVEL
-# Reference to the player node. Defined when player spawns
-var player
+# Reference to the hero node. Defined when hero spawns
+var hero
 
 var hero_max_life = 5 setget _set_hero_max_life
 var hero_life = 5 setget _set_hero_life
@@ -46,25 +46,25 @@ func set_level( level_scene=DEFAULT_STARTING_LEVEL, spawn_point=null ):
 	lvl.game = self
 	
 	# Spawn a new Hero
-	spawn_player()
-	self.level.add_child( self.player )
+	spawn_hero()
+	self.level.add_child( self.hero )
 	if !spawn_point:
 		spawn_point = self.level.DEFAULT_WARP_POINT
-	self.player.set_pos( self.level.get_node( spawn_point ).get_pos() )
-	self.player.init( self.level )
+	self.hero.set_pos( self.level.get_node( spawn_point ).get_pos() )
+	self.hero.init( self.level )
 
 	
 	
 func hero_dies():
-	if player:
+	if hero:
 		announce( "you have died..." )
-		player.die()
+		hero.die()
 
-func spawn_player():
-	var p = load( player_scene_path )
+func spawn_hero():
+	var p = load( hero_scene_path )
 	p = p.instance()
-	self.player = p
-	player.world = self
+	self.hero = p
+	hero.world = self
 
 func announce( message ):
 	DebugOutput.set_text( message )
@@ -116,9 +116,9 @@ func _input( event ):
 					if debug_mode.HeroDebugMode:
 						var menu = preload("res://scenes/HeroDebugMenu/HeroDebugMenu.tscn").instance()
 						HUD.add_child( menu )
-						if player:
-							menu.populate_params( player.get_debug_params() )
-							menu.hero = player
+						if hero:
+							menu.populate_params( hero.get_debug_params() )
+							menu.hero = hero
 						hero_debug_menu = menu
 					else:
 						if hero_debug_menu:
@@ -129,8 +129,8 @@ func _input( event ):
 
 			elif event.scancode == KEY_F12:
 				if debug_mode.DevMode:
-					if player:
-						player.hero_take_strike()
+					if hero:
+						hero.hero_take_strike()
 						announce( "Oh the indignity!" )
 				else:
 					announce( "DevMode OFF" )
