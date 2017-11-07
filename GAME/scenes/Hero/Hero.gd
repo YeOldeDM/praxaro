@@ -20,7 +20,7 @@ var AIR_STOP_FORCE = 250
 # Max speeds
 var MAX_SPEED = 68
 # Jump forces
-var JUMP_FORCE = 245
+var JUMP_FORCE = 260
 var JUMP_STOP_FORCE = 12
 
 
@@ -60,6 +60,11 @@ var world
 
 
 
+func die():
+	kill()
+
+func kill():
+	print( "!!! I AM KILLED !!!" )
 
 
 # Initialize the Hero
@@ -90,14 +95,16 @@ func get_debug_params():
 	{ "member": "JUMP_STOP_FORCE", "value": JUMP_STOP_FORCE, "min": 10, "max": 500, "step": 1 },
 	]
 
-# Special take_strike method unique to Me
-func hero_take_strike( from ):
-	print( "I am hurt by %s!" % from.get_name() )
+# Special take_strike method unique to Hero
+func hero_take_strike( from=null ):
+	var name = "A mysterious force!" if !from else from.get_name()
+	print( "I am hurt by %s!" % name )
 	if world.debug_mode.DevMode:
 		if world.debug_mode.GodMode:
 			print( "I am sparta!" )
 	else:
 		print( "OW!" )
+	world.hero_life -= 1
 
 # Initialize a STRIKE state
 # ("strike" animation should be set
@@ -201,7 +208,6 @@ func _fixed_process(delta):
 	
 	### COLLISION HANDLING ###
 	if is_colliding():
-		print( get_collider_metadata() )
 		var N = get_collision_normal()
 		var A = rad2deg(acos(N.dot(Vector2(0, -1))))
 		if A <= 20:
