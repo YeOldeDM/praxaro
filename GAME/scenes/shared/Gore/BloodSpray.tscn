@@ -1,0 +1,67 @@
+[gd_scene load_steps=4 format=1]
+
+[ext_resource path="res://assets/graphics/particles/blood_particles.png" type="Texture" id=1]
+
+[sub_resource type="ColorRamp" id=1]
+
+offsets = FloatArray( 0, 0.82906, 1 )
+colors = ColorArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0 )
+
+[sub_resource type="GDScript" id=2]
+
+script/source = "extends Particles2D
+
+# class member variables go here, for example:
+# var a = 2
+# var b = \"textvar\"
+
+func _ready():
+	set_emitting(true)
+	set_process(true)
+
+func _process(delta):
+	if !is_emitting():
+		queue_free()
+"
+
+[node name="BloodSpray" type="Particles2D"]
+
+visibility/blend_mode = 1
+config/amount = 32
+config/lifetime = 2.0
+config/time_scale = 5.0
+config/preprocess = 0.25
+config/emit_timeout = 2.0
+config/emitting = false
+config/process_mode = 1
+config/half_extents = Vector2( 2, 4 )
+config/explosiveness = 0.01
+config/texture = ExtResource( 1 )
+config/h_frames = 2
+config/v_frames = 2
+params/direction = 100.0
+params/spread = 2.0
+params/linear_velocity = 80.0
+params/spin_velocity = 0.0
+params/orbit_velocity = 0.0
+params/gravity_direction = 0.0
+params/gravity_strength = 5.0
+params/radial_accel = 0.0
+params/tangential_accel = 0.0
+params/damping = 40.0
+params/initial_angle = 20.0
+params/initial_size = 0.0
+params/final_size = 1.0
+params/hue_variation = 0.0
+params/anim_speed_scale = 0.0
+params/anim_initial_pos = 0.0
+randomness/spread = 1.0
+randomness/linear_velocity = 0.5
+randomness/gravity_strength = 1.0
+randomness/damping = 0.5
+randomness/initial_angle = 1.0
+randomness/anim_initial_pos = 1.0
+color/color_ramp = SubResource( 1 )
+script/script = SubResource( 2 )
+
+

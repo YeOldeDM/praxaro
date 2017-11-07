@@ -4,7 +4,7 @@ var owner
 
 var anims = [ "slash1","slash2" ]
 
-
+var strike_kickback = 180
 
 func start( from, anim=0 ):
 	self.owner = from
@@ -20,5 +20,18 @@ func _strike():
 	for body in hits:
 		if body != owner:
 			if body.has_method("take_strike"):
-				body.take_strike( self )
+				_hit( body )
+				
 
+func _hit( body ):
+	body.take_strike( self )
+	var va = -( body.get_pos() - owner.get_pos() ).normalized()
+	va *= self.strike_kickback
+	owner.ext_force += va
+	owner.get_node("Camera").shake( 2 )
+	
+	var blood = preload("res://scenes/shared/Gore/BloodSpray.tscn").instance()
+	body.get_parent().add_child(blood)
+	blood.set_pos( body.get_pos() )
+	blood.set_scale( Vector2( sign(va.x), 1 ) )
+	blood.set_rot( deg2rad( rand_range( -5, 5 ) ) )

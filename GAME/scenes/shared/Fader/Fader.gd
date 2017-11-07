@@ -10,13 +10,11 @@ var dir = -1
 onready var env = get_environment()
 
 func fade_in():
-	print("fading in")
 	F = 0.0
 	dir = 1.0
 	call_deferred("set_process", true)
 
 func fade_out():
-	print("fading out")
 	F = 1.0
 	dir = -1.0
 	call_deferred("set_process", true)
@@ -40,11 +38,5 @@ func _process(delta):
 		env.fx_set_param( env.FX_PARAM_BCS_CONTRAST, 8.0 )
 		emit_signal("fade_finished")
 		set_process(false)
-	prints(dir, F)
 
 
-func _ready():
-	connect( "fade_finished", self, "_done" )
-
-func _done():
-	print("DONE")

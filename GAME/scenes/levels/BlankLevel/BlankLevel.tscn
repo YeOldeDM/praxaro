@@ -1,9 +1,10 @@
-[gd_scene load_steps=6 format=1]
+[gd_scene load_steps=7 format=1]
 
 [ext_resource path="res://scenes/levels/LevelBase.gd" type="Script" id=1]
 [ext_resource path="res://res/tilesets/DarkTown.tres" type="TileSet" id=2]
 [ext_resource path="res://res/tilesets/CollisionTiles.tres" type="TileSet" id=3]
 [ext_resource path="res://assets/graphics/styleboxes/white_ring.png" type="Texture" id=4]
+[ext_resource path="res://scenes/level_components/WarpPoint.tscn" type="PackedScene" id=5]
 
 [sub_resource type="StyleBoxTexture" id=1]
 
@@ -60,14 +61,10 @@ cell/y_sort = false
 collision/use_kinematic = false
 collision/friction = 1.0
 collision/bounce = 0.0
-collision/layers = 1
-collision/mask = 1
+collision/layers = 3
+collision/mask = 3
 occluder/light_mask = 1
 tile_data = IntArray(  )
-
-[node name="START" type="Position2D" parent="."]
-
-transform/pos = Vector2( 240.693, 101.786 )
 
 [node name="BOUNDRY" type="PanelContainer" parent="."]
 
@@ -82,5 +79,7 @@ margin/top = 0.0
 margin/right = 480.0
 margin/bottom = 240.0
 custom_styles/panel = SubResource( 1 )
+
+[node name="START" parent="." instance=ExtResource( 5 )]
 
 
