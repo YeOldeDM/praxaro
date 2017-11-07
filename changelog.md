@@ -1,6 +1,11 @@
 # praxaro changelog
 
-# 0.0.6	CURRENT VERSION
+
+
+# 0.0.7	CURRENT VERSION
+-
+
+# 0.0.6	
 -Added a simple Health/Death system for the player Hero
 -Added new level-building components: WarpPoint & SpawnSnail
 -Brought in a new "BrownBlocks" tileset
