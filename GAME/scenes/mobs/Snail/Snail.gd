@@ -15,6 +15,7 @@ func die():
 
 func take_strike( from ):
 	self.hits -= 1
+	get_node("SFX").play("bleed")
 	if self.hits <= 0:
 		die()
 

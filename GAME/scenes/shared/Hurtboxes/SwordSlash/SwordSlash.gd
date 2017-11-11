@@ -11,24 +11,27 @@ func start( from, anim=0 ):
 	anim = clamp( anim, 0, anims.size()-1 )
 	get_node("Sprite").show()
 	get_node("Animator").play( anims[ anim ] )
+	get_node("SFX").play("swing")
 
 
 
 
 func _strike():
 	var hits = get_overlapping_bodies()
+
 	for body in hits:
 		if body != owner:
 			if body.has_method("take_strike"):
 				_hit( body )
-				
+
+
 
 func _hit( body ):
 	body.take_strike( self )
 	var va = -( body.get_pos() - owner.get_pos() ).normalized()
 	va *= self.strike_kickback
 	owner.ext_force += va
-	owner.get_node("Camera").shake( 2 )
+	owner.get_node("Camera").shake( 6 )
 	
 	var blood = preload("res://scenes/shared/Gore/BloodSpray.tscn").instance()
 	body.get_parent().add_child(blood)

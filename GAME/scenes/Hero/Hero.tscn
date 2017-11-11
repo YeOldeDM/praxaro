@@ -1,9 +1,12 @@
-[gd_scene load_steps=11 format=1]
+[gd_scene load_steps=16 format=1]
 
 [ext_resource path="res://scenes/Hero/Hero.gd" type="Script" id=1]
 [ext_resource path="res://assets/graphics/Hero/heroguy_spritesheet.png" type="Texture" id=2]
 [ext_resource path="res://scenes/Hero/HeroCamera.gd" type="Script" id=3]
 [ext_resource path="res://assets/graphics/Hero/halo_player.png" type="Texture" id=4]
+[ext_resource path="res://assets/sfx/jump.wav" type="Sample" id=5]
+[ext_resource path="res://assets/sfx/thunk.wav" type="Sample" id=6]
+[ext_resource path="res://assets/graphics/particles/cloud_puff.png" type="Texture" id=7]
 
 [sub_resource type="RectangleShape2D" id=1]
 
@@ -96,6 +99,26 @@ tracks/0/keys = {
 "update": 1,
 "values": [ 1, 2, 3, 4, 5, 6, 7, 0 ]
 }
+
+[sub_resource type="SampleLibrary" id=7]
+
+samples/jump = {
+"db": 0.0,
+"pitch": 1.0,
+"priority": 0,
+"sample": ExtResource( 5 )
+}
+samples/thunk = {
+"db": 0.0,
+"pitch": 1.0,
+"priority": 0,
+"sample": ExtResource( 6 )
+}
+
+[sub_resource type="ColorRamp" id=8]
+
+offsets = FloatArray( 0, 1 )
+colors = ColorArray( 0.285156, 0.285156, 0.285156, 1, 0, 0, 0, 0 )
 
 [node name="Hero" type="KinematicBody2D" groups=[
 "player",
@@ -210,5 +233,49 @@ shadow/color = Color( 0, 0, 0, 0 )
 shadow/buffer_size = 2048
 shadow/esm_multiplier = 80.0
 shadow/item_mask = 1
+
+[node name="SFX" type="SamplePlayer2D" parent="."]
+
+params/volume_db = 0.0
+params/pitch_scale = 1.0
+params/attenuation/min_distance = 1.0
+params/attenuation/max_distance = 2048.0
+params/attenuation/distance_exp = 1.0
+config/polyphony = 1
+config/samples = SubResource( 7 )
+config/pitch_random = 0.0
+
+[node name="Dust" type="Particles2D" parent="."]
+
+visibility/blend_mode = 1
+transform/pos = Vector2( 0, 16 )
+config/amount = 8
+config/lifetime = 0.5
+config/emit_timeout = 0.5
+config/emitting = false
+config/process_mode = 1
+config/half_extents = Vector2( 8, 0 )
+config/local_space = false
+config/explosiveness = 0.2
+config/texture = ExtResource( 7 )
+params/direction = 0.0
+params/spread = 10.0
+params/linear_velocity = 0.0
+params/spin_velocity = 0.0
+params/orbit_velocity = 0.0
+params/gravity_direction = 0.0
+params/gravity_strength = 0.0
+params/radial_accel = 0.0
+params/tangential_accel = 0.0
+params/damping = 0.0
+params/initial_angle = 0.0
+params/initial_size = 0.2
+params/final_size = 1.0
+params/hue_variation = 0.0
+params/anim_speed_scale = 1.0
+params/anim_initial_pos = 0.0
+randomness/initial_size = 1.0
+randomness/final_size = 1.0
+color/color_ramp = SubResource( 8 )
 
 

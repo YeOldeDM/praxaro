@@ -1,7 +1,9 @@
-[gd_scene load_steps=6 format=1]
+[gd_scene load_steps=9 format=1]
 
 [ext_resource path="res://scenes/shared/Hurtboxes/SwordSlash/SwordSlash.gd" type="Script" id=1]
 [ext_resource path="res://assets/graphics/fx/slash2.png" type="Texture" id=2]
+[ext_resource path="res://assets/sfx/bleed.wav" type="Sample" id=3]
+[ext_resource path="res://assets/sfx/swing.wav" type="Sample" id=4]
 
 [sub_resource type="RectangleShape2D" id=1]
 
@@ -72,6 +74,21 @@ tracks/1/keys = {
 } ]
 }
 
+[sub_resource type="SampleLibrary" id=4]
+
+samples/bleed = {
+"db": 0.0,
+"pitch": 1.0,
+"priority": 0,
+"sample": ExtResource( 3 )
+}
+samples/swing = {
+"db": 0.0,
+"pitch": 1.0,
+"priority": 0,
+"sample": ExtResource( 4 )
+}
+
 [node name="SwordSlash" type="Area2D" groups=[
 "hero_hurtbox",
 ]]
@@ -115,5 +132,16 @@ transform/pos = Vector2( 20, 0 )
 shape = SubResource( 1 )
 trigger = false
 _update_shape_index = 0
+
+[node name="SFX" type="SamplePlayer2D" parent="."]
+
+params/volume_db = 0.0
+params/pitch_scale = 1.0
+params/attenuation/min_distance = 1.0
+params/attenuation/max_distance = 2048.0
+params/attenuation/distance_exp = 1.0
+config/polyphony = 4
+config/samples = SubResource( 4 )
+config/pitch_random = 0.0
 
 

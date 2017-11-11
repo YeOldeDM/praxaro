@@ -1,12 +1,13 @@
-[gd_scene load_steps=5 format=1]
+[gd_scene load_steps=7 format=1]
 
 [ext_resource path="res://scenes/mobs/Snail/Snail.gd" type="Script" id=1]
 [ext_resource path="res://assets/graphics/mobs/Snail/snail.png" type="Texture" id=2]
+[ext_resource path="res://assets/sfx/bleed.wav" type="Sample" id=3]
 
 [sub_resource type="Animation" id=1]
 
 resource/name = "crawl"
-length = 0.9
+length = 1.0
 loop = true
 step = 0.1
 tracks/0/type = "value"
@@ -14,7 +15,7 @@ tracks/0/path = NodePath("Sprite/Body:frame")
 tracks/0/interp = 1
 tracks/0/imported = false
 tracks/0/keys = {
-"times": FloatArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8 ),
+"times": FloatArray( 0, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9 ),
 "transitions": FloatArray( 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
 "update": 1,
 "values": [ 0, 1, 2, 3, 4, 5, 6, 7, 8 ]
@@ -24,7 +25,7 @@ tracks/1/path = NodePath(".")
 tracks/1/interp = 1
 tracks/1/imported = false
 tracks/1/keys = {
-"times": FloatArray( 0.9 ),
+"times": FloatArray( 1 ),
 "transitions": FloatArray( 1 ),
 "values": [ {
 "args": [  ],
@@ -36,7 +37,7 @@ tracks/2/path = NodePath("Hitbox:transform/pos")
 tracks/2/interp = 1
 tracks/2/imported = false
 tracks/2/keys = {
-"times": FloatArray( 0, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9 ),
+"times": FloatArray( 0, 0.5, 0.6, 0.7, 0.8, 0.9, 1 ),
 "transitions": FloatArray( 1, 1, 1, 1, 1, 1, 1 ),
 "update": 0,
 "values": [ Vector2( 0, 0 ), Vector2( 0, 0 ), Vector2( 2, 0 ), Vector2( 4, 0 ), Vector2( 6, 0 ), Vector2( 8, 0 ), Vector2( 8, 0 ) ]
@@ -46,6 +47,15 @@ tracks/2/keys = {
 
 custom_solver_bias = 0.0
 extents = Vector2( 10, 5 )
+
+[sub_resource type="SampleLibrary" id=3]
+
+samples/bleed = {
+"db": 0.0,
+"pitch": 1.0,
+"priority": 0,
+"sample": ExtResource( 3 )
+}
 
 [node name="Snail" type="KinematicBody2D"]
 
@@ -61,6 +71,7 @@ script/script = ExtResource( 1 )
 
 texture = ExtResource( 2 )
 hframes = 9
+frame = 8
 
 [node name="WallRay" type="RayCast2D" parent="Sprite"]
 
@@ -85,12 +96,13 @@ playback/default_blend_time = 0.0
 root/root = NodePath("..")
 anims/crawl = SubResource( 1 )
 playback/active = true
-playback/speed = 1.0
+playback/speed = 0.65
 blend_times = [  ]
 autoplay = "crawl"
 
 [node name="Hitbox" type="Area2D" parent="."]
 
+transform/pos = Vector2( 8, 0 )
 input/pickable = true
 shapes/0/shape = SubResource( 2 )
 shapes/0/transform = Matrix32( 1, 0, 0, 1, -12, 0 )
@@ -109,6 +121,17 @@ transform/pos = Vector2( -12, 0 )
 shape = SubResource( 2 )
 trigger = false
 _update_shape_index = 0
+
+[node name="SFX" type="SamplePlayer2D" parent="."]
+
+params/volume_db = 0.0
+params/pitch_scale = 1.0
+params/attenuation/min_distance = 1.0
+params/attenuation/max_distance = 2048.0
+params/attenuation/distance_exp = 1.0
+config/polyphony = 1
+config/samples = SubResource( 3 )
+config/pitch_random = 0.0
 
 [connection signal="area_enter" from="Hitbox" to="." method="_on_Hitbox_area_enter"]
 

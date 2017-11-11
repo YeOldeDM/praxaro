@@ -120,6 +120,7 @@ func make_strike():
 	slash.set_scale( Vector2( self.facing, 1 ) )
 	slash.start( self )
 
+
 # End a STRIKE state
 # called by the last frame of the "strike" animation
 func end_strike():
@@ -211,6 +212,11 @@ func _fixed_process(delta):
 		var N = get_collision_normal()
 		var A = rad2deg(acos(N.dot(Vector2(0, -1))))
 		if A <= 20:
+			# Just hitting the ground..
+			if is_in_air():
+				# Kick up dust and thump our feet
+				get_node("Dust").set_emitting(true)
+				get_node("SFX").play("thunk")
 			self.airtime = 0
 			if self.jumping:
 				self.jumping = false
@@ -235,6 +241,8 @@ func _fixed_process(delta):
 		if JUMP and !pressed.JUMP and not jumping and is_on_ground() and can_move:
 			velocity.y = -JUMP_FORCE
 			self.jumping = true
+			get_node("SFX").play("jump")
+			get_node("Dust").set_emitting(true)
 
 		# Kill upward vertical movement if JUMP control is let go
 		if jumping and !JUMP and is_in_air() and velocity.y < -JUMP_STOP_FORCE:
